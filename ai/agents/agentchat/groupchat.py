@@ -54,16 +54,18 @@ Then select the next role from {self.agent_names} to play. Only return the role.
             logger.warning(
                 f"GroupChat is underpopulated with {n_agents} agents. Direct communication would be more efficient."
             )
-
-        final, name = await selector.generate_oai_reply(
-            self.messages
-            + [
+        ready_agents = [n for n in self.agent_names if n != last_speaker.name]
+        messages = self.messages + [
                 {
                     "role": "system",
-                    "content": f"Read the above conversation. Then select the next role from {self.agent_names} to play. Only return the role.",
+                    "content": f"Read the above conversation. "
+                               f"Then select the next role from {ready_agents} to play. "
+                               f"If the current role is mysql_engineer or chart_presenter, the next role should be Excutor."
+                               f"Only return the role.",
                 }
             ]
-        )
+        final, name = await selector.generate_oai_reply(messages)
+
         if last_speaker.name not in self.agent_names:
             last_speaker = self.agents[-1]
         if not final:

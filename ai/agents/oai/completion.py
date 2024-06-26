@@ -229,6 +229,7 @@ class Completion(openai_Completion):
                     pass
 
                 print("agent_name:", agent_name, 'fact use: llm:', use_llm_name, "url:", use_url, "may use model:", use_model)
+
                 if use_llm_name != "OpenAI":
                     """
                     A different LLM is called here
@@ -265,7 +266,7 @@ class Completion(openai_Completion):
                         response = AzureClient.run(use_api_key, data, use_model, use_url)
                     elif "AliBaiLian" == use_llm_name:
                         from .alibailianAdapter import AlibailianClient
-                        response = AlibailianClient.run(use_api_key, data, use_model)
+                        response = AlibailianClient.run_local(use_api_key, data, use_model, use_url)
                     elif "ZhiPuAI" == use_llm_name:
                         """
                         The ZhipuAI is called here

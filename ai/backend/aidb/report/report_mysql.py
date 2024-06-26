@@ -52,6 +52,7 @@ class ReportMysql(Report):
                             db_info)
                         # self.agent_instance_util.base_message = str(q_str)
                         self.agent_instance_util.set_base_message(q_str)
+                        self.agent_instance_util.db_id = db_id
 
                 else:
                     # self.agent_instance_util.base_message = str(q_str)
@@ -114,7 +115,13 @@ class ReportMysql(Report):
                     await planner_user.initiate_chat(
                         manager,
                         message='This is database related information：' + '\n' + self.agent_instance_util.base_message
-                                + '\n' + " This is my question: " + '\n' + str(qustion_message),
+                                + '\n'
+                                + "To answer the question. when the chat group starts, follow the steps:"
+                                  "1.choose the mysql_engineer to design the code."
+                                  "2.after mysql_engineer, choose the Executor to excute the code."
+                                  "3.after Excutor getting the data, choose the chart_presenter to design the code."
+                                  "4.after chart_presenter,choose the Executor again to excute the code."
+                                + " This is my question: " + '\n' + str(qustion_message),
                     )
 
                     answer_message = manager._oai_messages[bi_proxy]

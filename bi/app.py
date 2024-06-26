@@ -39,7 +39,7 @@ def create_app():
 
     sentry.init()
     app = Bi()
-
+    app.debug = False
     security.init_app(app)
     request_metrics.init_app(app)
     db.init_app(app)
